@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname,'views')) //usando path de node.js que conc
 //solo configuracion del motor de plantillas exphbs de express
 //app.engine: se define un motor en express que pide el nombre del motor y una funcion
 //en este caso la funcion es exphbs que define un objeto de configuracion de las plantillas
-app.engine('.hbs',exphbs({
+app.engine('.hbs', exphbs.engine({
     //es el nombre de la plantilla principal
     defaultLayout:'main', //el nombre de la plantilla principal, en views debe estar en layouts
     //para darle la ruta se necesitara el modulo de node.js "path"
