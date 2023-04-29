@@ -17,7 +17,7 @@ router.get("/add", (req, res) => {
 
 //submit del formulario
 //tienen el mismo nombre "/add" pero se van a diferenciar por el metodo http post get
-router.post("/add", (req, res) => {
+router.post("/add", async (req, res) => {
   //console.log(req.body)//muestra como recibimos los datos del formulario
   //para tenerlo mas ordenado
   const { title, url, description } = req.body;
@@ -28,6 +28,7 @@ router.post("/add", (req, res) => {
     description,
   };
   console.log(newLink);
+  await pool.query('INSERT INTO LINKS SET ?',[newLink])
   res.send("Recibido"); //solo muestra la palabra recibido
 });
 
