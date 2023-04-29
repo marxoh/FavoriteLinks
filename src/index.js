@@ -26,7 +26,7 @@ app.engine(
     layoutsDir: path.join(app.get("views"), "layouts"), //concatena views + 'layouts', y especificar main.hbs
     partialsDir: path.join(app.get("views"), "partials"), //idem, el express por si solo no sabe dnd esta
     extname: ".hbs", //especificar la extencion de los archivos de handlebars
-    //funciones adicionales para trabajar con handlevars
+    //funciones adicionales para trabajar con handlebars
     helpers: require("./lib/handlebars"), //el require si sabe donde se encuentra originalmente
   })
 );

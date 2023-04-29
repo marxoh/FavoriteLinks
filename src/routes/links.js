@@ -2,6 +2,7 @@
 //como eliminar, agregar, leer, actualizar: CRUD de enlaces
 //de primera se exporta sin nada para que no de error al require de index.js
 const express = require("express");
+//se declara una instancia de un objeto Router()
 const router = express.Router();
 
 //se llama a la conexion a la bd y se llamara pool
@@ -20,16 +21,42 @@ router.get("/add", (req, res) => {
 router.post("/add", async (req, res) => {
   //console.log(req.body)//muestra como recibimos los datos del formulario
   //para tenerlo mas ordenado
+  //destructurando req.body
   const { title, url, description } = req.body;
-  //para vincularlo luego al usuario que lo guardo?
+  //para vincularlo luego al usuario que lo guardo???
+  //cualquier objeto creado se puede ver en los hbs como si fura en el mismo contexto???
   const newLink = {
     title,
     url,
-    description,
+    description
   };
   console.log(newLink);
+  //el insert puede pasar un objeto o lista
   await pool.query('INSERT INTO LINKS SET ?',[newLink])
-  res.send("Recibido"); //solo muestra la palabra recibido
+  // res.send("Recibido"); //solo muestra la palabra recibido
+  res.redirect('/links')
 });
+
+
+router.get('/', async(req,res)=>{
+  const links = await pool.query('select * from links')
+  console.log(links)
+  // res.send('listas iran aki')
+  //se enviara la respuesta renderizando links/list por medio de {links}
+  res.render('links/list',{links})
+})
+
+router.get('/delete/:id',async(req,res)=>{
+  //muestra el parametro enviado por la ruta para eliminar
+  //req.params.id: este id parece que lo tiene ya manejado desde antes en todas las paginas
+  //console.log(req.params.id)
+  //desde req.params solo detrusctura el {id}, para manejarlo mejor solamente
+  const {id} = req.params
+  await pool.query('DELETE FROM links WHERE ID = ?',[id])
+  //redireccionara al mismo links porque obliga a consultar nuevamente a la bd
+  //y el link borrado ya no deberia estar
+  res.redirect('/links')
+  //res.send('Eliminado')
+})
 
 module.exports = router;
