@@ -1,0 +1,60 @@
+{{!solo para agregar un espaciado interno }}
+<div class="container p-4">
+  {{! una fila}}
+  <div class="row">
+    {{! una columna de 4}}
+    {{!-- mx-auto: lo deja centrado en la pagina --}}
+    <div class="col-md-4 mx-auto">
+      {{! una tarjeta para el formulario}}
+      <div class="card">
+        {{! dentro del body de la tarjeta}}
+        {{! especificar el metodo porque por defecto es get}}
+        <div class="card-body">
+            {{!-- al submit=action lleva a /links/add --}}
+          <form action="/links/add" method="POST">
+            {{! para separar los campos }}
+            <div class="form-group">
+              <input
+                type="text"
+                {{! class="form-control" //paraestilizarlo con boostrap}}
+                class="form-control"
+                {{! con name se le dice como va a recibir el dato}}
+                name="title"
+                placeholder="Titulo"
+                autofocus
+              />
+            </div>
+            <br />
+            <div class="form-group">
+              <input
+                type="url"
+                name="url"
+                class="form-control"
+                placeholder="URL"
+              />
+            </div>
+            <br />
+            <div class="form-group">
+              <textarea
+                name="description"
+                rows="2"
+                class="form-control"
+                placeholder="Descripcion"
+              ></textarea>
+            </div>
+            <br/>
+            {{! form-group para que se separe simplemente}}
+            <div class="form-group">
+                {{! btn-success para que sea verda}}
+                {{! btn-block para que ocupe todo el ancho disponible, PERO NO FUNCIONA en bootstrap5}}
+                {{! ahora funciona solo w-100}}
+              <button class="btn btn-success w-100">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
