@@ -36,12 +36,16 @@
       <div class="container p-4">
         <div class="row">
           <div class="col-md-4 mx-auto">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{!-- <div class="alert alert-success alert-dismissible fade show" role="alert"> --}}
+            <div class="alert alert-success">
                 {{wena}}
                 {{!-- X no funciona --}}
-                <button type="button" class="btn-close alert-primary" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                {{!-- <button type="button" class="btn-close alert-primary" aria-label="Close"> //mio --}}
+                {{!-- <button type="button"> --}}
                   <span aria-hidden="true">&times;</span>
                 </button>
+                {{!-- <button type="button" class="btn-close" data-bs-dismiss="alert"></button> --}}
             </div>
           </div>
         </div>
