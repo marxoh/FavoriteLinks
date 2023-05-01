@@ -56,6 +56,8 @@ router.get("/delete/:id", async (req, res) => {
   //desde req.params solo detrusctura el {id}, para manejarlo mejor solamente
   const { id } = req.params;
   await pool.query("DELETE FROM links WHERE ID = ?", [id]);
+  //mensajes connect-flash en delete
+  req.flash('wena', "Wena!!! Eliminado correctamente.")
   //redireccionara al mismo links porque obliga a consultar nuevamente a la bd
   //y el link borrado ya no deberia estar
   res.redirect("/links");
@@ -78,6 +80,7 @@ router.post("/edit/:id",async (req,res)=>{
     description
   }
   await pool.query('UPDATE links SET ? WHERE ID = ?',[newLink,id])
+  req.flash('wena', "Wena!!! Cambiado correctamente.")
   res.redirect('/links')
 })
 
