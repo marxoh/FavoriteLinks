@@ -5,7 +5,9 @@ const path = require("path"); //modulo de node.js que muestra las rutas, para co
 const flash = require('connect-flash') //connect-flash: middleware para los avisos al usuario
 //solo porque flash pide una sesion para funcionar, almacena los datos en la memoria del servidor
 const session = require('express-session') //tambien se puede guardar en la bd
-const MySQLStore = require('express-mysql-session')(session);//justamente
+//(session): se usa 'express-mysql-session' como un almacenamiento de sesiones para la sesión de Express.
+//(session): parametro que especifica el módulo de sesión a usar, por defecto 'express-session'
+const MySQLStore = require('express-mysql-session')(session);//y justamente se guarda en la bd
 const {database} = require('./keys'); //y la conexion a la bd que necesitó alguna vez
 
 // INITIALIZATIONS
@@ -43,7 +45,7 @@ app.use(session({
   secret: 'nombresito',
   resave: false, //para que no se autorenueve la sesion
   saveUninitialized: false, //para que no se vuelva a establecer la sesion
-  //en donde guardar la sesion
+  //en donde guardar la sesion, y se crea una tabla 'sessions' con campos 'session_id', 'expires' y 'data'
   store: new MySQLStore(database)
 }))
 //middleware flash
