@@ -28,35 +28,57 @@ router.post("/add", async (req, res) => {
   const newLink = {
     title,
     url,
-    description
+    description,
   };
   console.log(newLink);
   //el insert puede pasar un objeto o lista
-  await pool.query('INSERT INTO LINKS SET ?',[newLink])
+  await pool.query("INSERT INTO LINKS SET ?", [newLink]);
+  //se llamara a flash para mostrar una notificacion al usuario
+  //al usar flash desde un middleware esta disponible desde el req
+  //wena: nombre de la notificacion
+  req.flash('wena', "Wena!!! Guardado correctamente.")
   // res.send("Recibido"); //solo muestra la palabra recibido
-  res.redirect('/links')
+  res.redirect("/links");
 });
 
-
-router.get('/', async(req,res)=>{
-  const links = await pool.query('select * from links')
-  console.log(links)
+router.get("/", async (req, res) => {
+  const links = await pool.query("select * from links");
+  console.log(links);
   // res.send('listas iran aki')
   //se enviara la respuesta renderizando links/list por medio de {links}
-  res.render('links/list',{links})
-})
+  res.render("links/list", { links });
+});
 
-router.get('/delete/:id',async(req,res)=>{
+router.get("/delete/:id", async (req, res) => {
   //muestra el parametro enviado por la ruta para eliminar
   //req.params.id: este id parece que lo tiene ya manejado desde antes en todas las paginas
   //console.log(req.params.id)
   //desde req.params solo detrusctura el {id}, para manejarlo mejor solamente
-  const {id} = req.params
-  await pool.query('DELETE FROM links WHERE ID = ?',[id])
+  const { id } = req.params;
+  await pool.query("DELETE FROM links WHERE ID = ?", [id]);
   //redireccionara al mismo links porque obliga a consultar nuevamente a la bd
   //y el link borrado ya no deberia estar
-  res.redirect('/links')
+  res.redirect("/links");
   //res.send('Eliminado')
+});
+
+router.get("/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  // const {}
+  const links = await pool.query("SELECT * FROM links WHERE id = ?", [id]);
+  res.render("links/edit", { link: links[0] });
+});
+
+router.post("/edit/:id",async (req,res)=>{
+  const {id} = req.params
+  const {title,url,description} = req.body
+  const newLink = {
+    title,
+    url,
+    description
+  }
+  await pool.query('UPDATE links SET ? WHERE ID = ?',[newLink,id])
+  res.redirect('/links')
 })
 
 module.exports = router;

@@ -2,6 +2,11 @@ const express = require("express"); //framework de node.js de backend
 const morgan = require("morgan"); //permite crear logs o msjs http de lo que las app cte piden al srv
 const exphbs = require("express-handlebars"); //motor de plantillas
 const path = require("path"); //modulo de node.js que muestra las rutas, para configurar layoutsDir
+const flash = require('connect-flash') //connect-flash: middleware para los avisos al usuario
+//solo porque flash pide una sesion para funcionar, almacena los datos en la memoria del servidor
+const session = require('express-session') //tambien se puede guardar en la bd
+const mysqlstr = require("express-mysql-session"); //justamente
+const {database} = require('./keys'); //y la conexion a la bd que necesitó alguna vez
 
 // INITIALIZATIONS
 //se ejecuta express, app es mi aplicacion ahora porque se hara todo con app
@@ -34,6 +39,15 @@ app.engine(
 app.set("view engine", ".hbs");
 
 // MIDDLEWARES //funciones que se ejecutan cada vez que una app cte envia una peticion al serv
+app.use(session({
+  secret: 'nombresito',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 60000 }
+  //store: new mysqlstr(database) //ya no se guarda asi parece, buscar como guardar
+}))
+//middleware flash
+app.use(flash()) //con esto ya se puede usar flash en cualquier parte de la aplicacion
 //express.use: define los modulos que se van a utilizar
 app.use(morgan("dev")); //morgan muestra por consola las peticiones que van llegando
 //con npm run dev que ejecutara nodemon src/ desde package.json en scripts
@@ -47,6 +61,7 @@ app.use(express.json()); //pero no se va a utilizar aqui por ahora
 //toma la info ingresada, la respuesta del servidor y toma una accion para continuar con el resto del codigo
 //se va a ir rellenando a medida que se necesite acceder a variables desde cualquier parte
 app.use((req, res, next) => {
+  app.locals.wena = req.flash('wena')//asi se guarda una variable global jaja
   next();
 });
 
