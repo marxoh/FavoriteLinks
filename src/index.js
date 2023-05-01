@@ -5,7 +5,7 @@ const path = require("path"); //modulo de node.js que muestra las rutas, para co
 const flash = require('connect-flash') //connect-flash: middleware para los avisos al usuario
 //solo porque flash pide una sesion para funcionar, almacena los datos en la memoria del servidor
 const session = require('express-session') //tambien se puede guardar en la bd
-const mysqlstr = require("express-mysql-session"); //justamente
+const MySQLStore = require('express-mysql-session')(session);//justamente
 const {database} = require('./keys'); //y la conexion a la bd que necesitó alguna vez
 
 // INITIALIZATIONS
@@ -41,10 +41,10 @@ app.set("view engine", ".hbs");
 // MIDDLEWARES //funciones que se ejecutan cada vez que una app cte envia una peticion al serv
 app.use(session({
   secret: 'nombresito',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 }
-  //store: new mysqlstr(database) //ya no se guarda asi parece, buscar como guardar
+  resave: false, //para que no se autorenueve la sesion
+  saveUninitialized: false, //para que no se vuelva a establecer la sesion
+  //en donde guardar la sesion
+  store: new MySQLStore(database)
 }))
 //middleware flash
 app.use(flash()) //con esto ya se puede usar flash en cualquier parte de la aplicacion
