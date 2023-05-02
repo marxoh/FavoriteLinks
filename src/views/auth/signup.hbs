@@ -1,0 +1,50 @@
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="card text-center">
+        <div class="card-headder">
+          <h3>SignUp</h3>
+        </div>
+        <div class="card-body">
+          <form action="/signup" method="post">
+            {{! form-group solo para que se separe }}
+            <div class="form-group">
+              <input
+                type="text"
+                name="fullname"
+                placeholder="Fullname"
+                class="form-control"
+                autofocus
+              />
+              <br/>
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  class="form-control"
+                />
+              </div>
+              <br/>
+              <div class="form-group">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  class="form-control"
+                />
+              </div>
+              <br/>
+              <div class="form-group">
+                {{!-- btn-block: para extender el boton ya no funciona, ahora es w-100 --}}
+                <button class="btn btn-success w-100">
+                    SignUp
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

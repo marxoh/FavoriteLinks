@@ -9,10 +9,14 @@ const session = require('express-session') //tambien se puede guardar en la bd
 //(session): parametro que especifica el módulo de sesión a usar, por defecto 'express-session'
 const MySQLStore = require('express-mysql-session')(session);//y justamente se guarda en la bd
 const {database} = require('./keys'); //y la conexion a la bd que necesitó alguna vez
+//passport ya esta definido en lib/passport.js, en app se importa para utilizarlo
+const passport = require('passport')//es un middleware
 
 // INITIALIZATIONS
 //se ejecuta express, app es mi aplicacion ahora porque se hara todo con app
 const app = express();
+//para que app sepa de la autenticacion en este archivo
+require('./lib/passport')
 
 // SETTINGS
 //con express asi se definen las variables
@@ -58,6 +62,10 @@ app.use(morgan("dev")); //morgan muestra por consola las peticiones que van lleg
 app.use(express.urlencoded({ extended: false }));
 //si se quiere quiere extender la app a una app cliente y se quiere trabajar con json en vez de con bd
 app.use(express.json()); //pero no se va a utilizar aqui por ahora
+//passport debe ser inicializado
+app.use(passport.initialize())
+//passport necesita una session para manejar los datos
+app.use(passport.session())
 
 // GLOBAL VARIABLES //que variables van a ser accedidas desde la app
 //toma la info ingresada, la respuesta del servidor y toma una accion para continuar con el resto del codigo
