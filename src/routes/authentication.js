@@ -1,41 +1,29 @@
-//encargado de utilizar el metodo de autenticacion
-//se almacenara las rutas para la autenticacion
-//como signin, signup, login, logout, etc...
-//de primera se exporta sin nada para que no de error al require de index.js
+//estaran las rutas solo de logueo
 const express = require("express");
 const router = express.Router();
-
-//se importara la biblioteca passport
 const passport = require('passport')
 
-//para renderizar el formulario
+//la funcion para el formulario signup.hbs
+//get es para renderizar el formulario de signup.hbs
 router.get("/signup", (req, res) => {
-  res.render("auth/signup"); 
+  res.render("auth/signup");
 });
 
-//para recibir los datos de ese formulario y manejarlos
+//post es para recibir los datos de signup.hbs
 router.post("/signup", (req, res) => {
-  //aqui se va a utilizar la autenticacion, y se debe llamar con el nombre que se llamó al crearla
-  //para que passport sepa lo que tiene que hacer cuando lo llamamos
-  console.log('paso por signup')
-  passport.authenticate('local.signup',{ //aqui ejecuta local.signup asique va a passport.js
+  console.log('authentication post req.body: ',req.body)
+  //se llama a la autenticacion localSignup
+  //passport necesita saber que hacer si todo falla x1obj
+  passport.authenticate('localSignup',{
     successRedirect: '/profile',
-    failureRedirect: '/signup', //va a volver a ver el formulario tipico
+    failureRedirect: '/signup',
     failureFlash: true
   })
-  //res.send("recibiterterestingst");
+  //res.send("recibido");
 });
 
-//forma reducida del metodo comentado, sin la funcion
-// router.post('/signup',passport.authenticate('local.signup', {
-//   successRedirect: '/profile',
-//   failureRedirect: '/signup', //va a volver a ver el formulario tipico
-//   failureFlash: true
-//   }))
-
-
-router.get('./profile',(req,res)=>{
-    res.send('perfil')
+router.get('/profile',(req,res)=>{
+  res.send('your profile')
 })
 
 module.exports = router;

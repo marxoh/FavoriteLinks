@@ -43,7 +43,7 @@ router.post("/add", async (req, res) => {
 
 router.get("/", async (req, res) => {
   const links = await pool.query("select * from links");
-  console.log(links);
+  //console.log(links);
   // res.send('listas iran aki')
   //se enviara la respuesta renderizando links/list por medio de {links}
   res.render("links/list", { links });
