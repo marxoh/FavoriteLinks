@@ -13,24 +13,25 @@ router.get("/signup", (req, res) => {
   res.render("auth/signup"); 
 });
 
-// //para recibir los datos de ese formulario y manejarlos
-// router.post("/signup", (req, res) => {
-//   //aqui se va a utilizar la autenticacion, y se debe llamar con el nombre que se llamó al crearla
-//   //para que passport sepa lo que tiene que hacer cuando lo llamamos
-//   passport.authenticate('local.singup',{
-//     successRedirect: '/profile',
-//     failureRedirect: '/signup', //va a volver a ver el formulario tipico
-//     failureFlash: true
-//   })
-//   res.send("recibiterterestingst");
-// });
-
-//forma reducida del metodo comentado, sin la funcion
-router.post('/signup',passport.authenticate('local.signup',{
+//para recibir los datos de ese formulario y manejarlos
+router.post("/signup", (req, res) => {
+  //aqui se va a utilizar la autenticacion, y se debe llamar con el nombre que se llamó al crearla
+  //para que passport sepa lo que tiene que hacer cuando lo llamamos
+  console.log('paso por signup')
+  passport.authenticate('local.signup',{ //aqui ejecuta local.signup asique va a passport.js
     successRedirect: '/profile',
     failureRedirect: '/signup', //va a volver a ver el formulario tipico
     failureFlash: true
-  }))
+  })
+  //res.send("recibiterterestingst");
+});
+
+//forma reducida del metodo comentado, sin la funcion
+// router.post('/signup',passport.authenticate('local.signup', {
+//   successRedirect: '/profile',
+//   failureRedirect: '/signup', //va a volver a ver el formulario tipico
+//   failureFlash: true
+//   }))
 
 
 router.get('./profile',(req,res)=>{
