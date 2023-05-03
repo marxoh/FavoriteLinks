@@ -28,6 +28,23 @@
             <li><a class="dropdown-item" href="/links/add">Agregar un Link</a></li>
           </ul>
         </li>
+        {{#if user}}
+          <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Perfil
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/profile">Mi perfil</a></li>
+            <li><a class="dropdown-item" href="/logout">Cerrar Sesion</a></li>
+          </ul>
+        </li>
+        {{/if}}
         <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
         </li>

@@ -4,13 +4,14 @@
 const express = require("express");
 //se declara una instancia de un objeto Router()
 const router = express.Router();
-
 //se llama a la conexion a la bd y se llamara pool
 const pool = require("../database");
+//restringir las rutas no logueadas
+const { isLoggedIn } = require("../lib/auth");
 
 //express.router.get: para cuando el navegador trate de pedir una peticion get al servidor a la ruta /add
 //se va a responder de la siguiente mnaera
-router.get("/add", (req, res) => {
+router.get("/add", isLoggedIn, (req, res) => {
   //con req y res se encargan de manejar esta peticion
   //res.send("Form");
   res.render("links/add");
@@ -18,7 +19,8 @@ router.get("/add", (req, res) => {
 
 //submit del formulario
 //tienen el mismo nombre "/add" pero se van a diferenciar por el metodo http post get
-router.post("/add", async (req, res) => {
+//router.post("/add": llama a /add pero lo pone en {{{body}}} del mail.hbs
+router.post("/add", isLoggedIn, async (req, res) => {
   //console.log(req.body)//muestra como recibimos los datos del formulario
   //para tenerlo mas ordenado
   //destructurando req.body
@@ -36,12 +38,12 @@ router.post("/add", async (req, res) => {
   //se llamara a flash para mostrar una notificacion al usuario
   //al usar flash desde un middleware esta disponible desde el req
   //wena: nombre de la notificacion
-  req.flash('wena', "Wena!!! Guardado correctamente.")
+  req.flash("wena", "Wena!!! Guardado correctamente.");
   // res.send("Recibido"); //solo muestra la palabra recibido
   res.redirect("/links");
 });
 
-router.get("/", async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
   const links = await pool.query("select * from links");
   //console.log(links);
   // res.send('listas iran aki')
@@ -49,7 +51,7 @@ router.get("/", async (req, res) => {
   res.render("links/list", { links });
 });
 
-router.get("/delete/:id", async (req, res) => {
+router.get("/delete/:id", isLoggedIn, async (req, res) => {
   //muestra el parametro enviado por la ruta para eliminar
   //req.params.id: este id parece que lo tiene ya manejado desde antes en todas las paginas
   //console.log(req.params.id)
@@ -57,31 +59,31 @@ router.get("/delete/:id", async (req, res) => {
   const { id } = req.params;
   await pool.query("DELETE FROM links WHERE ID = ?", [id]);
   //mensajes connect-flash en delete
-  req.flash('wena', "Wena!!! Eliminado correctamente.")
+  req.flash("wena", "Wena!!! Eliminado correctamente.");
   //redireccionara al mismo links porque obliga a consultar nuevamente a la bd
   //y el link borrado ya no deberia estar
   res.redirect("/links");
   //res.send('Eliminado')
 });
 
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", isLoggedIn, async (req, res) => {
   const { id } = req.params;
   // const {}
   const links = await pool.query("SELECT * FROM links WHERE id = ?", [id]);
   res.render("links/edit", { link: links[0] });
 });
 
-router.post("/edit/:id",async (req,res)=>{
-  const {id} = req.params
-  const {title,url,description} = req.body
+router.post("/edit/:id", isLoggedIn, async (req, res) => {
+  const { id } = req.params;
+  const { title, url, description } = req.body;
   const newLink = {
     title,
     url,
-    description
-  }
-  await pool.query('UPDATE links SET ? WHERE ID = ?',[newLink,id])
-  req.flash('wena', "Wena!!! Cambiado correctamente.")
-  res.redirect('/links')
-})
+    description,
+  };
+  await pool.query("UPDATE links SET ? WHERE ID = ?", [newLink, id]);
+  req.flash("wena", "Wena!!! Cambiado correctamente.");
+  res.redirect("/links");
+});
 
 module.exports = router;

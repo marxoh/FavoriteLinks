@@ -63,7 +63,7 @@ passport.use(
   )
 );
 
-//se guarda el id del usuario
+//se guarda el id del usuario almacenado en memoria de la sesion de la app
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

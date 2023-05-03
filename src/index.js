@@ -73,6 +73,7 @@ app.use(passport.session())
 app.use((req, res, next) => {
   app.locals.wena = req.flash('wena')//asi se guarda una variable global jaja
   app.locals.message = req.flash('message')
+  app.locals.user = req.user
   next();
 });
 
