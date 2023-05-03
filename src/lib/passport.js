@@ -12,7 +12,7 @@ passport.use("LocalSignin",new LocalStrategy({
     usernameField: "username",
     passwordField: "password",
     passReqToCallback: true
-},async(req,username,password,done) =>{
+},async(req,username,password,done) => {
     console.log(req.body)
     // console.log(username)
     // console.log(password)
