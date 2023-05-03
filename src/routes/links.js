@@ -31,10 +31,11 @@ router.post("/add", isLoggedIn, async (req, res) => {
     title,
     url,
     description,
+    user_id: req.user.id
   };
   console.log(newLink);
   //el insert puede pasar un objeto o lista
-  await pool.query("INSERT INTO LINKS SET ?", [newLink]);
+  await pool.query("INSERT INTO links SET ?", [newLink]);
   //se llamara a flash para mostrar una notificacion al usuario
   //al usar flash desde un middleware esta disponible desde el req
   //wena: nombre de la notificacion
@@ -44,7 +45,7 @@ router.post("/add", isLoggedIn, async (req, res) => {
 });
 
 router.get("/", isLoggedIn, async (req, res) => {
-  const links = await pool.query("select * from links");
+  const links = await pool.query("select * from links Where user_id = ?", [req.user.id]);
   //console.log(links);
   // res.send('listas iran aki')
   //se enviara la respuesta renderizando links/list por medio de {links}

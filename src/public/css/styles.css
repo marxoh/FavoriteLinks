@@ -1,0 +1,53 @@
+/* general, afectara a todas las paginas */
+body {
+  /* color crema */
+  background: #f5f6f5;
+  /* Oswald: copiado de main, y la coma "," = de lo contrario use cans_serif */
+  font-family: "Oswald", sans-serif;
+  /* para poner el contenedor flotando al centro de la aplicacion */
+  overflow: hidden;
+}
+
+/* todas las clases index */
+.index {
+    /* 100% o 100vw o 100vh : ancho o alto total */
+    width: 100vw;
+    height: 100vh;
+}
+
+/* clases masthead, solo la de index.hbs */
+.masthead {
+    /* color blanco al texto */
+    color: white;
+    /* alto minimo */
+    min-height: 30rem;
+    /* ancho */
+    width: 100%;
+    /* alto */
+    height: 100%;
+    /* centrar */
+    padding-top: 8rem;
+    /* la img */
+    background: url('../img/background.jpeg');
+    /* img centrada */
+    background-position: center center;
+    /* img que no se repita */
+    background-repeat: no-repeat ;
+    /* img que ocupe todo el ancho disponible*/
+    background-size: cover;
+
+}
+
+/* estilizar objetos que estan dentro */
+.masthead h1 {
+    font-size: 4rem;
+    margin: 0;
+    padding: 0;
+}
+
+/* para hacer responsive el diseño */
+@media (min-width: 992px){
+    .masthead h1 {
+        font-size: 5.5rem;
+    }
+}
