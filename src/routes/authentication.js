@@ -9,6 +9,7 @@ router.get("/signup", (req, res) => {
   res.render("auth/signup");
 });
 
+//por que asi no funciona?
 // //post es para recibir los datos de signup.hbs
 // router.post("/signup", (req, res) => {
 //   //console.log('authentication post req.body: ',req.body)

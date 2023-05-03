@@ -1,9 +1,7 @@
 //muchos metodos
 const bcrypt = require('bcryptjs')
 
-
 const helpers = {}
-
 
 //metodo creado para cifrados al hacer signup
 helpers.encriptPassword = async(password) => {
