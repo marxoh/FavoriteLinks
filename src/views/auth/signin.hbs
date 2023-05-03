@@ -1,0 +1,43 @@
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="card text-center">
+        <div class="card-headder">
+          <h3>SignIn</h3>
+        </div>
+        <div class="card-body">
+            <img src="/img/logo.png" alt="Logo Fazt" class="card-img-top mx-auto m-2 rounded-circle w-50">
+          <form action="/signin" method="post">
+            {{! form-group solo para que se separe }}
+            <div class="form-group">
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  class="form-control"
+                />
+              </div>
+              <br/>
+              <div class="form-group">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  class="form-control"
+                />
+              </div>
+              <br/>
+              <div class="form-group">
+                {{!-- btn-block: para extender el boton ya no funciona, ahora es w-100 --}}
+                <button class="btn btn-success w-100">
+                    SignIn
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
