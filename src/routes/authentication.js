@@ -9,18 +9,25 @@ router.get("/signup", (req, res) => {
   res.render("auth/signup");
 });
 
-//post es para recibir los datos de signup.hbs
-router.post("/signup", (req, res) => {
-  console.log('authentication post req.body: ',req.body)
-  //se llama a la autenticacion localSignup
-  //passport necesita saber que hacer si todo falla x1obj
-  passport.authenticate('localSignup',{
-    successRedirect: '/profile',
-    failureRedirect: '/signup',
-    failureFlash: true
-  })
-  //res.send("recibido");
-});
+// //post es para recibir los datos de signup.hbs
+// router.post("/signup", (req, res) => {
+//   //console.log('authentication post req.body: ',req.body)
+//   //se llama a la autenticacion localSignup
+//   //passport necesita saber que hacer si todo falla x1obj
+//    passport.authenticate('localSignup',{
+//      successRedirect: '/profile',
+//      failureRedirect: '/signup',
+//      failureFlash: true
+//    })
+//   //res.send("recibido");
+// });
+
+router.post("/signup", passport.authenticate('localSignup',{
+     successRedirect: '/profile',
+     failureRedirect: '/signup',
+     failureFlash: true
+   })
+);
 
 router.get('/profile',(req,res)=>{
   res.send('your profile')

@@ -10,7 +10,7 @@ const session = require('express-session') //tambien se puede guardar en la bd
 const MySQLStore = require('express-mysql-session')(session);//y justamente se guarda en la bd
 const {database} = require('./keys'); //y la conexion a la bd que necesitó alguna vez
 //passport ya esta definido en lib/passport.js, en app se importa para utilizarlo
-const passport = require('passport')//es un middleware
+ const passport = require('passport')//es un middleware
 
 // INITIALIZATIONS
 //se ejecuta express, app es mi aplicacion ahora porque se hara todo con app
